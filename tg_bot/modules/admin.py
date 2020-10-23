@@ -28,16 +28,16 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("هیچ بەکارهێنەرێکت دیارینەکردووە.")
         return ""
 
     user_member = chat.get_member(user_id)
     if user_member.status == 'administrator' or user_member.status == 'creator':
-        message.reply_text("How am I meant to promote someone that's already an admin?")
+        message.reply_text("چۆن پلەی یەکێک بەرزبکەمەوە لە کاتێکدا خۆی بەڕێوەبەرە؟")
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I can't promote myself! Get an admin to do it for me.")
+        message.reply_text("ناتوانم پلەی خۆم بەرزبکەمەوە! بە بەڕێوەبەرێک بڵێ بیکات.")
         return ""
 
     # set same perms as bot - bot can't assign higher perms than itself!
@@ -53,11 +53,11 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
                           can_pin_messages=bot_member.can_pin_messages,
                           can_promote_members=bot_member.can_promote_members)
 
-    message.reply_text("Successfully promoted!")
+    message.reply_text("پلەی بەرزکرایەوە!")
     return "<b>{}:</b>" \
-           "\n#PROMOTED" \
-           "\n<b>Admin:</b> {}" \
-           "\n<b>User:</b> {}".format(html.escape(chat.title),
+           "\n#پلەبەرزکردنەوە" \
+           "\n<b>بەڕێوەبەر:</b> {}" \
+           "\n<b>بەکارهێنەر:</b> {}".format(html.escape(chat.title),
                                       mention_html(user.id, user.first_name),
                                       mention_html(user_member.user.id, user_member.user.first_name))
 
@@ -74,20 +74,20 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
 
     user_id = extract_user(message, args)
     if not user_id:
-        message.reply_text("You don't seem to be referring to a user.")
+        message.reply_text("هیچ بەکارهێنەرێکت دیارینەکردووە.")
         return ""
 
     user_member = chat.get_member(user_id)
     if user_member.status == 'creator':
-        message.reply_text("This person CREATED the chat, how would I demote them?")
+        message.reply_text("ئەمە ئەو کەسەیە کە گروپەکەی دروستکردووە، چۆن پلەی نزمبکەمەوە چاکە؟")
         return ""
 
     if not user_member.status == 'administrator':
-        message.reply_text("Can't demote what wasn't promoted!")
+        message.reply_text("ناتوانم پلەی یەکێک نزمبکەمەوە کە پێشتر پلەی بەرزنەکراوەتەوە!")
         return ""
 
     if user_id == bot.id:
-        message.reply_text("I can't demote myself! Get an admin to do it for me.")
+        message.reply_text("ناتوانم پلەی خۆم نزمبکەمەوە! بە بەڕێوەبەرێک بڵێ بیکات.")
         return ""
 
     try:
@@ -100,17 +100,17 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
                               can_restrict_members=False,
                               can_pin_messages=False,
                               can_promote_members=False)
-        message.reply_text("Successfully demoted!")
+        message.reply_text("پلەی نزمکرایەوە!")
         return "<b>{}:</b>" \
-               "\n#DEMOTED" \
-               "\n<b>Admin:</b> {}" \
-               "\n<b>User:</b> {}".format(html.escape(chat.title),
+               "\n#پلەنزمکردنەوە" \
+               "\n<b>بەڕێوەبەر:</b> {}" \
+               "\n<b>بەکارهێنەر:</b> {}".format(html.escape(chat.title),
                                           mention_html(user.id, user.first_name),
                                           mention_html(user_member.user.id, user_member.user.first_name))
 
     except BadRequest:
-        message.reply_text("Could not demote. I might not be admin, or the admin status was appointed by another "
-                           "user, so I can't act upon them!")
+        message.reply_text("نەمتوانی پلەی نزمبکەمەوە. لەوانەیە من بەڕێوەبەر نەبم، "
+                           "یان بەکارهێنەرێکی دیکە پێشتر پلەی بەرزکردبێتەاە!")
         return ""
 
 
@@ -140,8 +140,8 @@ def pin(bot: Bot, update: Update, args: List[str]) -> str:
             else:
                 raise
         return "<b>{}:</b>" \
-               "\n#PINNED" \
-               "\n<b>Admin:</b> {}".format(html.escape(chat.title), mention_html(user.id, user.first_name))
+               "\n#هەڵواسین" \
+               "\n<b>بەڕێەربەر:</b> {}".format(html.escape(chat.title), mention_html(user.id, user.first_name))
 
     return ""
 
@@ -164,8 +164,8 @@ def unpin(bot: Bot, update: Update) -> str:
             raise
 
     return "<b>{}:</b>" \
-           "\n#UNPINNED" \
-           "\n<b>Admin:</b> {}".format(html.escape(chat.title),
+           "\n#لێکردنەوە" \
+           "\n<b>بەڕێوەبەر:</b> {}".format(html.escape(chat.title),
                                        mention_html(user.id, user.first_name))
 
 
@@ -182,15 +182,15 @@ def invite(bot: Bot, update: Update):
             invitelink = bot.exportChatInviteLink(chat.id)
             update.effective_message.reply_text(invitelink)
         else:
-            update.effective_message.reply_text("I don't have access to the invite link, try changing my permissions!")
+            update.effective_message.reply_text("ناتوانم دەستم بگەیەنم بە بەستەری بانگهێشتکردن، تکایە بزانە مافەکانم تەواون!")
     else:
-        update.effective_message.reply_text("I can only give you invite links for supergroups and channels, sorry!")
+        update.effective_message.reply_text("من تەنها دەتوانم بەستەری بانگهێشتکردنت بۆ کەناڵ و گروپ بدەمێ، ببوورە!")
 
 
 @run_async
 def adminlist(bot: Bot, update: Update):
     administrators = update.effective_chat.get_administrators()
-    text = "Admins in *{}*:".format(update.effective_chat.title or "this chat")
+    text = "بەڕێوەبەرەکان لە*{}*:".format(update.effective_chat.title or "ئەم چاتە")
     for admin in administrators:
         user = admin.user
         name = "[{}](tg://user?id={})".format(user.first_name + (user.last_name or ""), user.id)
@@ -202,19 +202,19 @@ def adminlist(bot: Bot, update: Update):
 
 
 def __chat_settings__(chat_id, user_id):
-    return "You are *admin*: `{}`".format(
+    return "تۆ *بەڕێوەبەریت*: `{}`".format(
         dispatcher.bot.get_chat_member(chat_id, user_id).status in ("administrator", "creator"))
 
 
 __help__ = """
- - /adminlist: list of admins in the chat
+ - /adminlist: لیستی بەڕێوەبەران لە چاتێک.
 
 *Admin only:*
- - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.
- - /unpin: unpins the currently pinned message
- - /invitelink: gets invitelink
- - /promote: promotes the user replied to
- - /demote: demotes the user replied to
+ - /pin: بە بێدەنگی پەیامێک هەڵدەواسێت - دەتوانیت 'loud' یان 'notify' بەکاربێنیت بۆ ئاگادارکردنەوەی بەکارهێنەران.
+ - /unpin: پەیامە هەڵواسراوەکە لێدەکاتەوە
+ - /invitelink: بەستەری بانگهێشتکردنت دەخاتە بەردەست
+ - /promote: پلە بەرزکردنەوەی ئەو بەکارهێنەرەی وەڵامی دەدەیتەوە
+ - /demote: پلە نزمکردنەوەی ئەو بەکارهێنەرەی وەڵامی دەدەیتەوە
 """
 
 __mod_name__ = "Admin"
