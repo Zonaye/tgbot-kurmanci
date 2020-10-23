@@ -34,8 +34,8 @@ def purge(bot: Bot, update: Update, args: List[str]) -> str:
                     bot.deleteMessage(chat.id, m_id)
                 except BadRequest as err:
                     if err.message == "Message can't be deleted":
-                        bot.send_message(chat.id, "Cannot delete all messages. The messages may be too old, I might "
-                                                  "not have delete rights, or this might not be a supergroup.")
+                        bot.send_message(chat.id, "نەمتوانی هەموو پەیامەکان بسڕمەوە. لەوانەیە زۆر کۆن بن، "
+                                                  "لەوانەیە مافی سڕینەوەی پەیامم نەبێت.")
 
                     elif err.message != "Message to delete not found":
                         LOGGER.exception("Error while purging chat messages.")
@@ -44,22 +44,22 @@ def purge(bot: Bot, update: Update, args: List[str]) -> str:
                 msg.delete()
             except BadRequest as err:
                 if err.message == "Message can't be deleted":
-                    bot.send_message(chat.id, "Cannot delete all messages. The messages may be too old, I might "
-                                              "not have delete rights, or this might not be a supergroup.")
+                    bot.send_message(chat.id, "نەمتوانی هەموو پەیامەکان بسڕمەوە. لەوانەیە زۆر کۆن بن، لەوانەیە "
+                                              " مافی سڕینەوەی پەیامم نەبێت.")
 
                 elif err.message != "Message to delete not found":
                     LOGGER.exception("Error while purging chat messages.")
 
-            bot.send_message(chat.id, "Purge complete.")
+            bot.send_message(chat.id, "پاککردنەوە تەواوبوو.")
             return "<b>{}:</b>" \
                    "\n#PURGE" \
-                   "\n<b>Admin:</b> {}" \
-                   "\nPurged <code>{}</code> messages.".format(html.escape(chat.title),
+                   "\n<b>بەڕێوەبەر:</b> {}" \
+                   "\nخاوێنکردنەوە: بە سڕینەوەی <code>{}</code> پەیام.".format(html.escape(chat.title),
                                                                mention_html(user.id, user.first_name),
                                                                delete_to - message_id)
 
     else:
-        msg.reply_text("Reply to a message to select where to start purging from.")
+        msg.reply_text("وەڵامی پەیامێک بدەرەوە بۆ ئەوەی بزانم لە کوێوە خاوێنکردنەوە دەکەم.")
 
     return ""
 
@@ -76,11 +76,11 @@ def del_message(bot: Bot, update: Update) -> str:
             update.effective_message.delete()
             return "<b>{}:</b>" \
                    "\n#DEL" \
-                   "\n<b>Admin:</b> {}" \
-                   "\nMessage deleted.".format(html.escape(chat.title),
+                   "\n<b>بەڕێوەبەر:</b> {}" \
+                   "\پەیام سڕدرایەوە.".format(html.escape(chat.title),
                                                mention_html(user.id, user.first_name))
     else:
-        update.effective_message.reply_text("Whadya want to delete?")
+        update.effective_message.reply_text("دەتەوێت چی بسڕیتەوە؟")
 
     return ""
 
