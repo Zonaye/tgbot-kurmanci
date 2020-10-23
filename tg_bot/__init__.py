@@ -113,7 +113,7 @@ if "-r" in sys.argv:
 def stop_and_restart():
 	os.system("git pull")
 	updater.stop()
-	os.execl(sys.executable, sys.executable, "tg_bot")
+	os.execl(sys.executable, sys.executable, *sys.argv)
 
 def restart(bot, context):
 	bot.send_message(951435494, "Bot is restarting...")
