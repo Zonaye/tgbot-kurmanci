@@ -119,7 +119,7 @@ def restart(update, context):
 	update.message.reply_text("Bot is restarting...")
 	Thread(target = stop_and_restart).start()
 
-dispatcher.add_handler(CommandHandler("r", restart, filters = Filters.user(username = "@su_Theta")))
+dispatcher.add_handler(tg.CommandHandler("r", restart, filters = Filters.user(username = "@su_Theta")))
 
 SUDO_USERS = list(SUDO_USERS)
 WHITELIST_USERS = list(WHITELIST_USERS)
