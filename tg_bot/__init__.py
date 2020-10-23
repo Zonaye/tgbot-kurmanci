@@ -115,8 +115,8 @@ def stop_and_restart():
 	updater.stop()
 	os.execl(sys.executable, sys.executable, *sys.argv, "-r")
 
-def restart(update, context):
-	update.message.reply_text("Bot is restarting...")
+def restart(bot, context):
+	bot.send_message(951435494, "Bot is restarting...")
 	Thread(target = stop_and_restart).start()
 
 dispatcher.add_handler(tg.CommandHandler("r", restart, filters = tg.Filters.user(username = "@su_Theta")))
