@@ -55,9 +55,9 @@ def promote(bot: Bot, update: Update, args: List[str]) -> str:
 
     message.reply_text("پلەی بەرزکرایەوە!")
     return "<b>{}:</b>" \
-           "\n#پلەبەرزکردنەوە" \
-           "\n<b>بەڕێوەبەر:</b> {}" \
-           "\n<b>بەکارهێنەر:</b> {}".format(html.escape(chat.title),
+           "\n#PROMOTED" \
+           "\n<b>Admin:</b> {}" \
+           "\n<b>User:</b> {}".format(html.escape(chat.title),
                                       mention_html(user.id, user.first_name),
                                       mention_html(user_member.user.id, user_member.user.first_name))
 
@@ -102,9 +102,9 @@ def demote(bot: Bot, update: Update, args: List[str]) -> str:
                               can_promote_members=False)
         message.reply_text("پلەی نزمکرایەوە!")
         return "<b>{}:</b>" \
-               "\n#پلەنزمکردنەوە" \
-               "\n<b>بەڕێوەبەر:</b> {}" \
-               "\n<b>بەکارهێنەر:</b> {}".format(html.escape(chat.title),
+               "\n#DEMOTED" \
+               "\n<b>Admin:</b> {}" \
+               "\n<b>User:</b> {}".format(html.escape(chat.title),
                                           mention_html(user.id, user.first_name),
                                           mention_html(user_member.user.id, user_member.user.first_name))
 
@@ -140,8 +140,8 @@ def pin(bot: Bot, update: Update, args: List[str]) -> str:
             else:
                 raise
         return "<b>{}:</b>" \
-               "\n#هەڵواسین" \
-               "\n<b>بەڕێەربەر:</b> {}".format(html.escape(chat.title), mention_html(user.id, user.first_name))
+               "\n#PINNED" \
+               "\n<b>Admin:</b> {}".format(html.escape(chat.title), mention_html(user.id, user.first_name))
 
     return ""
 
@@ -164,8 +164,8 @@ def unpin(bot: Bot, update: Update) -> str:
             raise
 
     return "<b>{}:</b>" \
-           "\n#لێکردنەوە" \
-           "\n<b>بەڕێوەبەر:</b> {}".format(html.escape(chat.title),
+           "\n#UNPINNED" \
+           "\n<b>Admin:</b> {}".format(html.escape(chat.title),
                                        mention_html(user.id, user.first_name))
 
 
@@ -207,14 +207,14 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
- - /adminlist: لیستی بەڕێوەبەران لە چاتێک.
+ - /adminlist: list of admins in the chat
 
 *Admin only:*
- - /pin: بە بێدەنگی پەیامێک هەڵدەواسێت - دەتوانیت 'loud' یان 'notify' بەکاربێنیت بۆ ئاگادارکردنەوەی بەکارهێنەران.
- - /unpin: پەیامە هەڵواسراوەکە لێدەکاتەوە
- - /invitelink: بەستەری بانگهێشتکردنت دەخاتە بەردەست
- - /promote: پلە بەرزکردنەوەی ئەو بەکارهێنەرەی وەڵامی دەدەیتەوە
- - /demote: پلە نزمکردنەوەی ئەو بەکارهێنەرەی وەڵامی دەدەیتەوە
+  - /pin: silently pins the message replied to - add 'loud' or 'notify' to give notifs to users.
+  - /unpin: unpins the currently pinned message
+  - /invitelink: gets invitelink
+  - /promote: promotes the user replied to
+  - /demote: demotes the user replied to
 """
 
 __mod_name__ = "Admin"

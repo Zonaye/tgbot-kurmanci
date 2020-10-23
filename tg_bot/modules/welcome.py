@@ -87,7 +87,7 @@ def new_member(bot: Bot, update: Update):
         for new_mem in new_members:
             # Give the owner a special welcome
             if new_mem.id == OWNER_ID:
-                update.effective_message.reply_text("Master is in the houseeee, let's get this party started!")
+                update.effective_message.reply_text("خاوەنەکەم لێرەیە! {}".format(b'\xf0\x9f\x8e\x89'.decode()))
                 continue
 
             # Don't welcome yourself
@@ -154,7 +154,7 @@ def left_member(bot: Bot, update: Update):
 
             # Give the owner a special goodbye
             if left_mem.id == OWNER_ID:
-                update.effective_message.reply_text("RIP Master")
+                update.effective_message.reply_text("خاوەنەکەم ڕۆیشت... {}".format(b'\xe2\x98\xb9\xef\xb8\x8f'.decode()))
                 return
 
             # if media goodbye, use appropriate function for it
@@ -227,11 +227,11 @@ def welcome(bot: Bot, update: Update, args: List[str]):
     elif len(args) >= 1:
         if args[0].lower() in ("on", "yes"):
             sql.set_welc_preference(str(chat.id), True)
-            update.effective_message.reply_text("I'll be polite!")
+            update.effective_message.reply_text("بەخێرهاتن دەکەم!")
 
         elif args[0].lower() in ("off", "no"):
             sql.set_welc_preference(str(chat.id), False)
-            update.effective_message.reply_text("I'm sulking, not saying hello anymore.")
+            update.effective_message.reply_text("چیتر بەخێرهاتن ناکەم.")
 
         else:
             # idek what you're writing, say yes or no
@@ -295,11 +295,11 @@ def set_welcome(bot: Bot, update: Update) -> str:
     text, data_type, content, buttons = get_welcome_type(msg)
 
     if data_type is None:
-        msg.reply_text("You didn't specify what to reply with!")
+        msg.reply_text("هیچ شتێکت دیارینەکردووە بۆ ئەوەی بەکارهێنەرە نوێیەکانی پێبەخێرهاتنبکرێت!")
         return ""
 
     sql.set_custom_welcome(chat.id, content or text, data_type, buttons)
-    msg.reply_text("Successfully set custom welcome message!")
+    msg.reply_text("پەیامی بەخێرهاتن سەرکەوتووانە هەڵگیرا!")
 
     return "<b>{}:</b>" \
            "\n#SET_WELCOME" \
@@ -333,11 +333,11 @@ def set_goodbye(bot: Bot, update: Update) -> str:
     text, data_type, content, buttons = get_welcome_type(msg)
 
     if data_type is None:
-        msg.reply_text("You didn't specify what to reply with!")
+        msg.reply_text("هیچ شتێکت دیارینەکردووە بۆ ئەوەی بەکارهێنەرە بەو بەکارهێنەرانە بوترێت کە دەردەچن!")
         return ""
 
     sql.set_custom_gdbye(chat.id, content or text, data_type, buttons)
-    msg.reply_text("Successfully set custom goodbye message!")
+    msg.reply_text("پەیامی خواحافیزیکردن سەرکەوتووانە هەڵگیرا!")
     return "<b>{}:</b>" \
            "\n#SET_GOODBYE" \
            "\n<b>Admin:</b> {}" \

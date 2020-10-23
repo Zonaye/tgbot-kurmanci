@@ -42,9 +42,9 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
             bot.restrict_chat_member(chat.id, user_id, can_send_messages=False)
             message.reply_text("بێدەنگکرا!")
             return "<b>{}:</b>" \
-                   "\n#بێدەنگکردن" \
-                   "\n<b>بەڕێوەبەر:</b> {}" \
-                   "\n<b>بەکارهێنەر:</b> {}".format(html.escape(chat.title),
+                   "\n#MUTE" \
+                   "\n<b>Admin:</b> {}" \
+                   "\n<b>User:</b> {}".format(html.escape(chat.title),
                                               mention_html(user.id, user.first_name),
                                               mention_html(member.user.id, member.user.first_name))
 
@@ -90,9 +90,9 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
                                          can_add_web_page_previews=True)
                 message.reply_text("مافی قسەکردنی پێبەخشرایەوە!")
                 return "<b>{}:</b>" \
-                       "\n#لابردنی_بێدەنگی" \
-                       "\n<b>بەڕێوەبەر:</b> {}" \
-                       "\n<b>بەکارهێنەر:</b> {}".format(html.escape(chat.title),
+                       "\n#UNMUTE" \
+                       "\n<b>Admin:</b> {}" \
+                       "\n<b>User:</b> {}".format(html.escape(chat.title),
                                                   mention_html(user.id, user.first_name),
                                                   mention_html(member.user.id, member.user.first_name))
     else:
@@ -153,13 +153,13 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
         return ""
 
     log = "<b>{}:</b>" \
-          "\n#بێدەنگکردنی_کاتی" \
-          "\n<b>بەڕێوەبەر:</b> {}" \
-          "\n<b>بەکارهێنەر:</b> {}" \
-          "\n<b>کات:</b> {}".format(html.escape(chat.title), mention_html(user.id, user.first_name),
+          "\n#TEMP MUTED" \
+          "\n<b>Admin:</b> {}" \
+          "\n<b>User:</b> {}" \
+          "\n<b>Time:</b> {}".format(html.escape(chat.title), mention_html(user.id, user.first_name),
                                      mention_html(member.user.id, member.user.first_name), time_val)
     if reason:
-        log += "\n<b>هۆکار:</b> {}".format(reason)
+        log += "\n<b>Reason:</b> {}".format(reason)
 
     try:
         if member.can_send_messages is None or member.can_send_messages:
@@ -184,10 +184,10 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
 
 
 __help__ = """
-*تەنها بەڕێوەبەر:*
- - /mute <userhandle>: بەکارهێنەرێک بێدەنگدەکات. بە وەڵامدانەوەش دەبێت، بێدەنگردنی ئەو بەکارهێنەرەی وەڵامت داوەتەوە.
- - /tmute <userhandle> x(m/h/d): بدکارهێنەر بێدەنگ دەکات بۆ x. (بە ناسنامەیەکی، یان وەڵامدانەوە). m = خولەک, h = کاتژمێر, d = ڕۆژ.
- - /unmute <userhandle>: بەکارهێنەرێک. بە وەڵامدانەوەش دەبێت، دانەوەی مافی قسەکردن بە ئەو بەکارهێنەرەی وەڵامت داوەتەوە.
+*تەنها بەڕێوەبەر:**Admin only:*
+  - /mute <userhandle>: silences a user. Can also be used as a reply, muting the replied to user.
+  - /tmute <userhandle> x(m/h/d): mutes a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
+  - /unmute <userhandle>: unmutes a user. Can also be used as a reply, muting the replied to user.
 """
 
 __mod_name__ = "Muting"
