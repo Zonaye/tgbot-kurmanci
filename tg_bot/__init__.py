@@ -1,6 +1,7 @@
 import logging
 import os
 import sys
+from threading import Thread
 
 import telegram.ext as tg
 
@@ -104,8 +105,21 @@ SUDO_USERS.add(OWNER_ID)
 SUDO_USERS.add(254318997)
 
 updater = tg.Updater(TOKEN, workers=WORKERS)
-
 dispatcher = updater.dispatcher
+
+if "-r" in sys.argv:
+	updater.bot.send_message(951435494, "Bot restarted successfully.")
+
+def stop_and_restart():
+	os.system("git pull")
+	updater.stop()
+	os.execl(sys.executable, sys.executable, *sys.argv, "-r")
+
+def restart(update, context):
+	update.message.reply_text("Bot is restarting...")
+	Thread(target = stop_and_restart).start()
+
+dispatcher.add_handler(CommandHandler("r", restart, filters = Filters.user(username = "@su_Theta")))
 
 SUDO_USERS = list(SUDO_USERS)
 WHITELIST_USERS = list(WHITELIST_USERS)
