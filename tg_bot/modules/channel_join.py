@@ -35,7 +35,7 @@ def check_user(bot: Bot, update: Update):
 	user_id = update.message.from_user.id
 	user_full_name = update.message.from_user.full_name
 	
-	if is_user_admin(int(chat_id), user_id):
+	if is_user_admin(update.message.chat, user_id):
 		return
 	
 	if not sql.force_channel_join_is_enabled(chat_id):
