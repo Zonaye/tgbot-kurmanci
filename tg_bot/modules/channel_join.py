@@ -23,7 +23,7 @@ def set_channel_for_force_join(bot: Bot, update: Update):
         update.effective_message.reply_text("پەیوەستبوونی ناچاریی کەناڵ ناچالاککرا.")
         return
         
-     channel_id = channel_id.replace("@", "")
+    channel_id = channel_id.replace("@", "")
 
     sql.set_channel_for_force_join(update.message.chat.id, reason)
     update.effective_message.reply_text("کەناڵی پەیوەستبوون بەناچاری گۆڕدرا. دڵنیابە کە من لەو کەناڵە بەڕێوەبەرم بۆ ئەوەی کارەکەم بە ڕێکی بەجێبهێنم.")
