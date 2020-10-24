@@ -16,7 +16,7 @@ from tg_bot.modules.helper_funcs.chat_status import is_user_admin, is_user_in_ch
 @user_admin
 def set_channel_for_force_join(bot: Bot, update: Update):
     args = update.effective_message.text.split(None, 1)
-    if len(args) >= 2:
+    if len(args) = 2:
         channel_id = args[1]
     else:
         sql.rm_force_channel_join(update.effective_message.chat.id)
