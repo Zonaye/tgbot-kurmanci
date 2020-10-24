@@ -35,8 +35,6 @@ def check_flood(bot: Bot, update: Update) -> str:
 
     try:
         chat.kick_member(user.id)
-        msg.reply_text("I like to leave the flooding to natural disasters. But you, you were just a "
-                       "disappointment. Get out.")
 
         return "<b>{}:</b>" \
                "\n#BANNED" \
@@ -45,7 +43,7 @@ def check_flood(bot: Bot, update: Update) -> str:
                                              mention_html(user.id, user.first_name))
 
     except BadRequest:
-        msg.reply_text("I can't kick people here, give me permissions first! Until then, I'll disable antiflood.")
+        msg.reply_text("ناتوانم خەڵک دەربکەم، بزانە مافی پێویستم هەیە. هەتاوەکو ئەوکاتەی مافی پێویستم دەدەیتێ دژەدووبارەبوونەوە دەوەستێنم.")
         sql.set_flood(chat.id, 0)
         return "<b>{}:</b>" \
                "\n#INFO" \
@@ -65,25 +63,25 @@ def set_flood(bot: Bot, update: Update, args: List[str]) -> str:
         val = args[0].lower()
         if val == "off" or val == "no" or val == "0":
             sql.set_flood(chat.id, 0)
-            message.reply_text("Antiflood has been disabled.")
+            message.reply_text("دژەدووبارەبوونەوە ناچالاککرا.")
 
         elif val.isdigit():
             amount = int(val)
             if amount <= 0:
                 sql.set_flood(chat.id, 0)
-                message.reply_text("Antiflood has been disabled.")
+                message.reply_text("دژەدووبارەبوونەوە ناچالاککرا.")
                 return "<b>{}:</b>" \
                        "\n#SETFLOOD" \
                        "\n<b>Admin:</b> {}" \
                        "\nDisabled antiflood.".format(html.escape(chat.title), mention_html(user.id, user.first_name))
 
             elif amount < 3:
-                message.reply_text("Antiflood has to be either 0 (disabled), or a number bigger than 3!")
+                message.reply_text("دژەدووبارەبوونەوە دەبێت 0 (ناچالاک) بێت، یان ژمارەیەک گەورەتر لە 3!")
                 return ""
 
             else:
                 sql.set_flood(chat.id, amount)
-                message.reply_text("Antiflood has been updated and set to {}".format(amount))
+                message.reply_text("دژەدووبارەبوونەوە نوێکرایەوە و کرا بە {}".format(amount))
                 return "<b>{}:</b>" \
                        "\n#SETFLOOD" \
                        "\n<b>Admin:</b> {}" \
@@ -102,10 +100,10 @@ def flood(bot: Bot, update: Update):
 
     limit = sql.get_flood_limit(chat.id)
     if limit == 0:
-        update.effective_message.reply_text("I'm not currently enforcing flood control!")
+        update.effective_message.reply_text("دژەدووبارەبوونەوە ناچالاکە!")
     else:
         update.effective_message.reply_text(
-            "I'm currently banning users if they send more than {} consecutive messages.".format(limit))
+            "لە ئێستادا ئەگەر بەکارهێنەرێک {} پەیام لەسەریەک و بەخێرایی بنێرێت من بانیدەکەم.".format(limit))
 
 
 def __migrate__(old_chat_id, new_chat_id):

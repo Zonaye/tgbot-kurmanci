@@ -38,17 +38,17 @@ def send_rules(update, chat_id, from_pm=False):
     if from_pm and rules:
         bot.send_message(user.id, text, parse_mode=ParseMode.MARKDOWN)
     elif from_pm:
-        bot.send_message(user.id, "The group admins haven't set any rules for this chat yet. "
-                                  "This probably doesn't mean it's lawless though...!")
+        bot.send_message(user.id, "بەڕێوەبەرەکانی ئێرە هیچ یاسایەکیان بۆ ئێرە دانەناوە. "
+                                  "بەڵام ئەوەش مانای ئەوە نییە کە بێدەستوورە...!")
     elif rules:
-        update.effective_message.reply_text("Contact me in PM to get this group's rules.",
+        update.effective_message.reply_text("وەرە با لە تب یاساکانت نیشانبدەم.",
                                             reply_markup=InlineKeyboardMarkup(
-                                                [[InlineKeyboardButton(text="Rules",
+                                                [[InlineKeyboardButton(text="یاساکان",
                                                                        url="t.me/{}?start={}".format(bot.username,
                                                                                                      chat_id))]]))
     else:
-        update.effective_message.reply_text("The group admins haven't set any rules for this chat yet. "
-                                            "This probably doesn't mean it's lawless though...!")
+        update.effective_message.reply_text("بەڕێوەبەرەکانی ئێرە هیچ یاسایەکیان بۆ ئێرە دانەناوە. "
+                                            "بەڵام ئەوەش مانای ئەوە نییە کە بێدەستوورە...!")
 
 
 @run_async
@@ -64,7 +64,7 @@ def set_rules(bot: Bot, update: Update):
         markdown_rules = markdown_parser(txt, entities=msg.parse_entities(), offset=offset)
 
         sql.set_rules(chat_id, markdown_rules)
-        update.effective_message.reply_text("Successfully set rules for this group.")
+        update.effective_message.reply_text("یاساکان سەرکەوتووانە دانران.")
 
 
 @run_async
@@ -72,7 +72,7 @@ def set_rules(bot: Bot, update: Update):
 def clear_rules(bot: Bot, update: Update):
     chat_id = update.effective_chat.id
     sql.set_rules(chat_id, "")
-    update.effective_message.reply_text("Successfully cleared rules!")
+    update.effective_message.reply_text("یاساکان لابران!")
 
 
 def __stats__():
