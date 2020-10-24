@@ -44,7 +44,7 @@ def check_user(bot: Bot, update: Update):
 	channel_id = "@" + sql.ENABLED_CHATS[chat_id]
 	
 	
-	if is_user_in_chat(channel_id, user_id):
+	if is_user_in_chat(bot.get_chat(channel_id), user_id):
 		return
 	
 	update.message.delete()
