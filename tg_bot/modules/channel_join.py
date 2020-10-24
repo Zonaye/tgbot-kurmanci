@@ -1,6 +1,6 @@
 from typing import Optional
 
-from telegram import Message, Update, Bot, User, InlineKeyboardMarkup, KeyboardButton
+from telegram import Message, Update, Bot, User, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram import MessageEntity
 from telegram.ext import Filters, CommandHandler, MessageHandler, run_async
 
