@@ -10,6 +10,10 @@ class Channel(BASE):
 
     chat_id = Column(String(100), primary_key=True)
     channel_id = Column(String(100))
+    
+    def __init__(self, chat_id, channel_id):
+        self.chat_id = chat_id
+        self.channel_id = channel_id
 
 
 Channel.__table__.create(checkfirst=True)
