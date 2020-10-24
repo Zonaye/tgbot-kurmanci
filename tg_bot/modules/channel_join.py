@@ -19,7 +19,7 @@ def set_channel_for_force_join(bot: Bot, update: Update):
     if len(args) >= 2:
         channel_id = args[1]
     else:
-        sql.rm_force_channel_join(update.message.chat.id)
+        sql.rm_force_channel_join(update.effective_message.chat.id)
         update.effective_message.reply_text("پەیوەستبوونی ناچاریی کەناڵ ناچالاککرا.")
         return
         
@@ -31,11 +31,11 @@ def set_channel_for_force_join(bot: Bot, update: Update):
 
 @run_async
 def check_user(bot: Bot, update: Update):
-	chat_id = str(update.message.chat.id)
-	user_id = update.message.from_user.id
-	user_full_name = update.message.from_user.full_name
+	chat_id = str(update.effective_message.chat.id)
+	user_id = update.effective_message.from_user.id
+	user_full_name = update.effective_message.from_user.full_name
 	
-	if is_user_admin(update.message.chat, user_id):
+	if is_user_admin(update.effective_message.chat, user_id):
 		return
 	
 	if not sql.force_channel_join_is_enabled(chat_id):
@@ -47,7 +47,7 @@ def check_user(bot: Bot, update: Update):
 	if is_user_in_chat(bot.get_chat(channel_id), user_id):
 		return
 	
-	update.message.delete()
+	update.effective_message.delete()
 	
 	mention = f'<a href="tg://user?id={user_id}">{user_full_name}</a>'
 	
