@@ -22,7 +22,7 @@ PM_START_TEXT = """
 سڵاو! من ناوم هیکارییە. بۆتێکی خێرا و سوودبەخشم بۆ ئاسانکردنی بەڕێوەبردنی گروپەکانت.
 
 ئەگەر هاوکاریت دەوێت لەسەر چۆنیەتیی بەکارهێنانم، سەردانی ئێرە بکە:
-@HikariCKBSupport
+@Xelt1caCKBSupport
 """
 
 HELP_STRINGS = """
@@ -237,7 +237,7 @@ def get_help(bot: Bot, update: Update):
         update.effective_message.reply_text("ئەو دوگمەیەی خوارەوە بکە بۆ زانیاری لەسەر چۆنیەتیی بەکارهێنانم.",
                                             reply_markup=InlineKeyboardMarkup(
                                                 [[InlineKeyboardButton(text="گروپی پشتگیری",
-                                                                       url="t.me/HikariCKBSupport".format(
+                                                                       url="t.me/Xelt1caCKBSupport".format(
                                                                            bot.username))]]))
         return
 
