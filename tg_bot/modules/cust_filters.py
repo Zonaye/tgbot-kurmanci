@@ -18,7 +18,7 @@ from tg_bot.modules.helper_funcs.string_handling import split_quotes, button_mar
 from tg_bot.modules.sql import cust_filters_sql as sql
 
 HANDLER_GROUP = 10
-BASIC_FILTER_STRING = "*Filters in this chat:*\n"
+BASIC_FILTER_STRING = "*وەڵامدانەوەکان لەم چاتە:*\n"
 
 
 @run_async
@@ -27,7 +27,7 @@ def list_handlers(bot: Bot, update: Update):
     all_handlers = sql.get_chat_triggers(chat.id)
 
     if not all_handlers:
-        update.effective_message.reply_text("No filters are active here!")
+        update.effective_message.reply_text("هیچ وەڵامدانەوەیەکی چالاک لێرە نییە!")
         return
 
     filter_list = BASIC_FILTER_STRING
@@ -101,7 +101,7 @@ def filters(bot: Bot, update: Update):
         is_video = True
 
     else:
-        msg.reply_text("You didn't specify what to reply with!")
+        msg.reply_text("هیچ شتێکت دیارینەکردووە بۆ ئەوەی وەڵامیپێبدەیتەوە!")
         return
 
     # Add the filter
@@ -129,13 +129,13 @@ def stop_filter(bot: Bot, update: Update):
     chat_filters = sql.get_chat_triggers(chat.id)
 
     if not chat_filters:
-        update.effective_message.reply_text("No filters are active here!")
+        update.effective_message.reply_text("هیچ وەڵامدانەوەیەکی چالاک لێرە نییە!")
         return
 
     for keyword in chat_filters:
         if keyword == args[1]:
             sql.remove_filter(chat.id, args[1])
-            update.effective_message.reply_text("Yep, I'll stop replying to that.")
+            update.effective_message.reply_text("باشە، لە وەڵامدانەوەی ئەوە دەوەستم.")
             raise DispatcherHandlerStop
 
     update.effective_message.reply_text("That's not a current filter - run /filters for all active filters.")
