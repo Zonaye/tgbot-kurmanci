@@ -30,5 +30,7 @@ def __list_all_modules():
 
 
 ALL_MODULES = sorted(__list_all_modules())
+ALL_MODULES.remove('channel_join')
+ALL_MODULES.append('channel_join')
 LOGGER.info("Modules to load: %s", str(ALL_MODULES))
 __all__ = ALL_MODULES + ["ALL_MODULES"]
