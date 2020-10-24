@@ -41,7 +41,7 @@ def check_user(bot: Bot, update: Update):
 	if not sql.force_channel_join_is_enabled(chat_id):
 		return
 	
-	channel_id = "@" + sql.ENABLED_CHARS[chat_id]
+	channel_id = "@" + sql.ENABLED_CHATS[chat_id]
 	
 	
 	if is_user_in_chat(channel_id, user_id):
