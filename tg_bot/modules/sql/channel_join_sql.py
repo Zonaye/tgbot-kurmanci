@@ -9,7 +9,7 @@ class Channel(BASE):
     __tablename__ = "chat_channels"
 
     chat_id = Column(String(100), primary_key=True)
-    channel_id = Column(String(100), primary_key=True)
+    channel_id = Column(String(100))
 
 
 Channel.__table__.create(checkfirst=True)
