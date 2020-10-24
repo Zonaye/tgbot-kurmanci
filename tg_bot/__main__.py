@@ -237,8 +237,7 @@ def get_help(bot: Bot, update: Update):
         update.effective_message.reply_text("ئەو دوگمەیەی خوارەوە بکە بۆ زانیاری لەسەر چۆنیەتیی بەکارهێنانم.",
                                             reply_markup=InlineKeyboardMarkup(
                                                 [[InlineKeyboardButton(text="گروپی پشتگیری",
-                                                                       url="t.me/Xelt1caCKBSupport".format(
-                                                                           bot.username))]]))
+                                                                       url="t.me/Xelt1caCKBSupport")]]))
         return
 
     elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
