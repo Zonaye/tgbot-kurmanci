@@ -19,7 +19,7 @@ def set_channel_for_force_join(bot: Bot, update: Update):
     if len(args) == 2:
         channel_id = args[1]
     else:
-        sql.rm_force_channel_join(update.effective_message.chat.id)
+        sql.rm_force_channel_join(str(update.effective_message.chat.id))
         update.effective_message.reply_text("پەیوەستبوونی ناچاریی کەناڵ ناچالاککرا.")
         return
         
