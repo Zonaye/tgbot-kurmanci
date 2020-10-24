@@ -1,6 +1,6 @@
 import threading
 
-from sqlalchemy import String
+from sqlalchemy import Column, String
 
 from tg_bot.modules.sql import BASE, SESSION
 
@@ -8,8 +8,8 @@ from tg_bot.modules.sql import BASE, SESSION
 class Channel(BASE):
     __tablename__ = "chat_channels"
 
-    chat_id = String(100)
-    channel_id = String(100)
+    chat_id = Column(String(100), primary_key=True)
+    channel_id = Column(String(100), primary_key=True)
 
 
 Channel.__table__.create(checkfirst=True)
