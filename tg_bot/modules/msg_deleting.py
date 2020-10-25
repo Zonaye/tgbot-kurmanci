@@ -53,8 +53,10 @@ def purge(bot: Bot, update: Update, args: List[str]) -> str:
             bot.send_message(chat.id, "Paqijkirin temam.")
             return "<b>{}:</b>" \
                    "\n#PURGE" \
-                   "\n<b>بەڕێوەبەر:</b> {}" \
-                   "\nخاوێنکردنەوە: بە سڕینەوەی <code>{}</code> پەیام.".format(html.escape(chat.title),
+                   "\n<b>Admin:</b> {}" \
+                   "\nPurged <code>{}</code> messages.".format(html.escape(chat.title),
+                                                               mention_html(user.id, user.first_name),
+                                                               delete_to - message_id)
                                                                mention_html(user.id, user.first_name),
                                                                delete_to - message_id)
 
