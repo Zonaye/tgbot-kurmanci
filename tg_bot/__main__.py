@@ -142,7 +142,7 @@ def start(bot: Bot, update: Update, args: List[str]):
             first_name = update.effective_user.first_name
             update.effective_message.reply_photo(
                 photo=open("photo.png", "rb"), caption=PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
-                parse_mode=ParseMode.MARKDOWN, reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("زیادم بکە بۆ گروپەکەت", url='http://t.me/{}?startgroup=botstart'.format(bot.username))]]))
+                parse_mode=ParseMode.MARKDOWN, reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("+ Min tevlî komê xwe bike +", url='http://t.me/{}?startgroup=botstart'.format(bot.username))]]))
     else:
         update.effective_message.reply_text("Silav! Ez zindî me.")
 
