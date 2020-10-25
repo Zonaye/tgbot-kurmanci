@@ -54,8 +54,7 @@ def bot_can_delete(func):
         if can_delete(update.effective_chat, bot.id):
             return func(bot, update, *args, **kwargs)
         else:
-            update.effective_message.reply_text("ناتوانم لێرە پەیامەکان بسڕمەوە! "
-                                                "دڵنیابەرەوە کە بەڕێوەبەرم و مافی پێویستم هەیە.")
+            update.effective_message.reply_text("Ez nikarim li vir peyaman jê bibim.")
 
     return delete_rights
 
@@ -66,8 +65,7 @@ def can_pin(func):
         if update.effective_chat.get_member(bot.id).can_pin_messages:
             return func(bot, update, *args, **kwargs)
         else:
-            update.effective_message.reply_text("ناتوانم لێرە پەیام هەڵبواسم! "
-                                                "دڵنیابەرەوە کە بەەڕێوەبەرم و مافی پێویستم هەیە.")
+            update.effective_message.reply_text("Nikarim li vir peyaman helwasim.")
 
     return pin_rights
 
@@ -90,7 +88,7 @@ def can_restrict(func):
         if update.effective_chat.get_member(bot.id).can_restrict_members:
             return func(bot, update, *args, **kwargs)
         else:
-            update.effective_message.reply_text("Min mafê sinordarkirinê tuneye.")
+            update.effective_message.reply_text("Min mafê sinordarkirinê tune ye.")
 
     return promote_rights
 
