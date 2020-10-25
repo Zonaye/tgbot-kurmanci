@@ -61,7 +61,7 @@ def purge(bot: Bot, update: Update, args: List[str]) -> str:
                                                                delete_to - message_id)
 
     else:
-        msg.reply_text("وەڵامی پەیامێک بدەرەوە بۆ ئەوەی بزانم لە کوێوە خاوێنکردنەوە دەکەم.")
+        msg.reply_text("Bersiva peyamek bide.")
 
     return ""
 
