@@ -87,7 +87,7 @@ def new_member(bot: Bot, update: Update):
         for new_mem in new_members:
             # Give the owner a special welcome
             if new_mem.id == OWNER_ID:
-                update.effective_message.reply_text("خاوەنەکەم لێرەیە! {}".format(b'\xf0\x9f\x8e\x89'.decode()))
+                update.effective_message.reply_text("Xwedanê min li vir e! {}".format(b'\xf0\x9f\x8e\x89'.decode()))
                 continue
 
             # Don't welcome yourself
@@ -154,7 +154,7 @@ def left_member(bot: Bot, update: Update):
 
             # Give the owner a special goodbye
             if left_mem.id == OWNER_ID:
-                update.effective_message.reply_text("خاوەنەکەم ڕۆیشت... {}".format(b'\xe2\x98\xb9\xef\xb8\x8f'.decode()))
+                update.effective_message.reply_text("Xwedanê min çû... {}".format(b'\xe2\x98\xb9\xef\xb8\x8f'.decode()))
                 return
 
             # if media goodbye, use appropriate function for it
