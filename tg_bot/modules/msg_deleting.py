@@ -56,7 +56,7 @@ def purge(bot: Bot, update: Update, args: List[str]) -> str:
                                                                mention_html(user.id, user.first_name),
                                                                delete_to - message_id)
                                                                mention_html(user.id, user.first_name),
-                                                               delete_to - message_id)
+                                                               delete_to - message_id))
 
     else:
         msg.reply_text("Bersiva peyamekê bide.")
