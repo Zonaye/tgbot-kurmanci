@@ -19,10 +19,10 @@ from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
 PM_START_TEXT = """
-سڵاو! من ناوم هیکارییە. بۆتێکی خێرا و سوودبەخشم بۆ ئاسانکردنی بەڕێوەبردنی گروپەکانت.
+Silav! Navê min Hîkarî ye. Ez botek bilez û besûd im ji bo birêvebirina komên te.
 
-ئەگەر هاوکاریت دەوێت لەسەر چۆنیەتیی بەکارهێنانم، سەردانی ئێرە بکە:
-@Xelt1caCKBSupport
+Eger alîkarî dixwazî derbarê çawanîya bikaranîna min seredana vê derê bike:
+https://t.me/joinchat/AAAAAFZ3pG-kfQ6e1Ss3Bw
 """
 
 HELP_STRINGS = """
@@ -144,7 +144,7 @@ def start(bot: Bot, update: Update, args: List[str]):
                 photo=open("photo.png", "rb"), caption=PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
                 parse_mode=ParseMode.MARKDOWN, reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("زیادم بکە بۆ گروپەکەت", url='http://t.me/{}?startgroup=botstart'.format(bot.username))]]))
     else:
-        update.effective_message.reply_text("سڵاو! من لە ژیاندام.")
+        update.effective_message.reply_text("Silav! Ez zindî me.")
 
 
 # for test purposes
@@ -234,10 +234,10 @@ def get_help(bot: Bot, update: Update):
     # ONLY send help in PM
     if chat.type != chat.PRIVATE:
 
-        update.effective_message.reply_text("ئەو دوگمەیەی خوارەوە بکە بۆ زانیاری لەسەر چۆنیەتیی بەکارهێنانم.",
-                                            reply_markup=InlineKeyboardMarkup(
-                                                [[InlineKeyboardButton(text="گروپی پشتگیری",
-                                                                       url="t.me/Xelt1caCKBSupport")]]))
+        #update.effective_message.reply_text("ئەو دوگمەیەی خوارەوە بکە بۆ زانیاری لەسەر چۆنیەتیی بەکارهێنانم.",
+                                          #  reply_markup=InlineKeyboardMarkup(
+                                            #    [[InlineKeyboardButton(text="گروپی پشتگیری",
+                                           #                            url="t.me/Xelt1caCKBSupport")]]))
         return
 
     elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
