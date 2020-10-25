@@ -33,7 +33,7 @@ def send_rules(update, chat_id, from_pm=False):
             raise
 
     rules = sql.get_rules(chat_id)
-    text = "یاساکانی *{}* بریتین لە:\n\n{}".format(escape_markdown(chat.title), rules)
+    text = "Yasayên *{}*:\n\n{}".format(escape_markdown(chat.title), rules)
 
     if from_pm and rules:
         bot.send_message(user.id, text, parse_mode=ParseMode.MARKDOWN)
@@ -41,9 +41,9 @@ def send_rules(update, chat_id, from_pm=False):
         bot.send_message(user.id, "بەڕێوەبەرەکانی ئێرە هیچ یاسایەکیان بۆ ئێرە دانەناوە. "
                                   "بەڵام ئەوەش مانای ئەوە نییە کە بێدەستوورە...!")
     elif rules:
-        update.effective_message.reply_text("وەرە با لە تب یاساکانت نیشانبدەم.",
+        update.effective_message.reply_text("Were bila li TB yasayan ji te re nîşan bidim.",
                                             reply_markup=InlineKeyboardMarkup(
-                                                [[InlineKeyboardButton(text="یاساکان",
+                                                [[InlineKeyboardButton(text="Yasayên vê komê",
                                                                        url="t.me/{}?start={}".format(bot.username,
                                                                                                      chat_id))]]))
     else:
@@ -64,7 +64,7 @@ def set_rules(bot: Bot, update: Update):
         markdown_rules = markdown_parser(txt, entities=msg.parse_entities(), offset=offset)
 
         sql.set_rules(chat_id, markdown_rules)
-        update.effective_message.reply_text("یاساکان سەرکەوتووانە دانران.")
+        update.effective_message.reply_text("Yasayan hatin danîn.")
 
 
 @run_async
@@ -72,7 +72,7 @@ def set_rules(bot: Bot, update: Update):
 def clear_rules(bot: Bot, update: Update):
     chat_id = update.effective_chat.id
     sql.set_rules(chat_id, "")
-    update.effective_message.reply_text("یاساکان لابران!")
+    update.effective_message.reply_text("Yasayan hatin jê birin!")
 
 
 def __stats__():
