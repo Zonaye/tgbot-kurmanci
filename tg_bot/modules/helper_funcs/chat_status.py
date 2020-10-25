@@ -90,8 +90,8 @@ def can_restrict(func):
         if update.effective_chat.get_member(bot.id).can_restrict_members:
             return func(bot, update, *args, **kwargs)
         else:
-            update.effective_message.reply_text("ناتوانم لێرە خەڵک سنوورداربکەم! "
-                                                "دڵنیابەرەوە کە بەڕێوەبەرم و مافی پێویستم هەیە.")
+            update.effective_message.reply_text("Min mafê sinordarkirinê tuneye."
+                                           )
 
     return promote_rights
 
