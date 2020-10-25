@@ -78,8 +78,8 @@ def del_message(bot: Bot, update: Update) -> str:
             update.effective_message.delete()
             return "<b>{}:</b>" \
                    "\n#DEL" \
-                   "\n<b>بەڕێوەبەر:</b> {}" \
-                   "\پەیام سڕدرایەوە.".format(html.escape(chat.title),
+                   "\n<b>Admin:</b> {}" \
+                   "\nMessage deleted.".format(html.escape(chat.title),
                                                mention_html(user.id, user.first_name))
     else:
         update.effective_message.reply_text("دەتەوێت چی بسڕیتەوە؟")
