@@ -90,8 +90,7 @@ def can_restrict(func):
         if update.effective_chat.get_member(bot.id).can_restrict_members:
             return func(bot, update, *args, **kwargs)
         else:
-            update.effective_message.reply_text("Min mafê sinordarkirinê tuneye."
-                                           )
+            update.effective_message.reply_text("Min mafê sinordarkirinê tuneye.")
 
     return promote_rights
 
@@ -102,7 +101,7 @@ def bot_admin(func):
         if is_bot_admin(update.effective_chat, bot.id):
             return func(bot, update, *args, **kwargs)
         else:
-            update.effective_message.reply_text("من بەڕێوەبەر نیم!")
+            update.effective_message.reply_text("Ez ne birêvebir im!")
 
     return is_admin
 
@@ -121,7 +120,7 @@ def user_admin(func):
             update.effective_message.delete()
 
         else:
-            update.effective_message.reply_text("بۆچی یەکێک کە بەڕێوەبەر نییە دەیەوێت کارم پێبکات؟")
+            update.effective_message.reply_text("Tu ne birêvebir î.")
 
     return is_admin
 
