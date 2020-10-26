@@ -34,12 +34,12 @@ def get_id(bot: Bot, update: Update, args: List[str]):
         if update.effective_message.reply_to_message and update.effective_message.reply_to_message.forward_from:
             user1 = update.effective_message.reply_to_message.from_user
             user2 = update.effective_message.reply_to_message.forward_from
-            update.effective_message.reply_text(
-                "Wî kesê ev şandiye, {}, IDya wî ev e: `{}`.\n\nWî kesê veguhestiye, {}, IDya wî ev e: `{}`.").format(
+            update.effective_message.reply_text("Wî kesê ev şandiye, {}, IDya wî ev e: `{}`.\n" \
+                                                "\nWî kesê veguhestiye, {}, IDya wî ev e: `{}`.".format(
                     escape_markdown(user2.first_name),
                     user2.id,
                     escape_markdown(user1.first_name),
-                    user1.id)),
+                    user1.id),
             parse_mode=ParseMode.MARKDOWN)
         else:
             user = bot.get_chat(user_id)
