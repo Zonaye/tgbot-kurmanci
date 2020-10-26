@@ -39,8 +39,8 @@ def get_id(bot: Bot, update: Update, args: List[str]):
                     escape_markdown(user2.first_name),
                     user2.id,
                     escape_markdown(user1.first_name),
-                    user1.id),
-                parse_mode=ParseMode.MARKDOWN)
+                    user1.id)),
+            parse_mode=ParseMode.MARKDOWN)
         else:
             user = bot.get_chat(user_id)
             update.effective_message.reply_text("IDya {} ev e: `{}`.".format(escape_markdown(user.first_name), user.id),
