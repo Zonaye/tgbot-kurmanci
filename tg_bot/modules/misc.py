@@ -92,7 +92,7 @@ def info(bot: Bot, update: Update, args: List[str]):
         text += "\n\nEw min çêkiriye. :)"
     else:
         if user.id in SUDO_USERS:
-            text += "\nEw payedar e. :D"
+            text += "\n\nEw payedar e. :D"
     for mod in USER_INFO:
         mod_info = mod.__user_info__(user.id).strip()
         if mod_info:
