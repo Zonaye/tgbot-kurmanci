@@ -34,8 +34,8 @@ def get_id(bot: Bot, update: Update, args: List[str]):
         if update.effective_message.reply_to_message and update.effective_message.reply_to_message.forward_from:
             user1 = update.effective_message.reply_to_message.from_user
             user2 = update.effective_message.reply_to_message.forward_from
-            update.effective_message.reply_text("Wî kesê ev şandiye, {}, IDya wî ev e: `{}`.\n" \
-                                                "\nWî kesê veguhestiye, {}, IDya wî ev e: `{}`.".format(
+            update.effective_message.reply_text("Wî kesê ev şandiye, {}, ID'ya wî ev e: `{}`.\n" \
+                                                "\nWî kesê veguhestiye, {}, ID'ya wî ev e: `{}`.".format(
                     escape_markdown(user2.first_name),
                     user2.id,
                     escape_markdown(user1.first_name),
@@ -43,16 +43,16 @@ def get_id(bot: Bot, update: Update, args: List[str]):
             parse_mode=ParseMode.MARKDOWN)
         else:
             user = bot.get_chat(user_id)
-            update.effective_message.reply_text("IDya {} ev e: `{}`.".format(escape_markdown(user.first_name), user.id),
+            update.effective_message.reply_text("ID'ya {} ev e: `{}`.".format(escape_markdown(user.first_name), user.id),
                                                 parse_mode=ParseMode.MARKDOWN)
     else:
         chat = update.effective_chat  # type: Optional[Chat]
         if chat.type == "private":
-            update.effective_message.reply_text("IDya te: `{}`.".format(chat.id),
+            update.effective_message.reply_text("ID'ya te: `{}`.".format(chat.id),
                                                 parse_mode=ParseMode.MARKDOWN)
 
         else:
-            update.effective_message.reply_text("IDya vê çatê: `{}`.".format(chat.id),
+            update.effective_message.reply_text("ID'ya vê çatê: `{}`.".format(chat.id),
                                                 parse_mode=ParseMode.MARKDOWN)
 
 
