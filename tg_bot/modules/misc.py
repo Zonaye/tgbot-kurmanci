@@ -78,7 +78,7 @@ def info(bot: Bot, update: Update, args: List[str]):
 
     text = "<b>Zanyarîya Bikarhêner</b>:" \
            "\nID: <code>{}</code>" \
-           "\n Navê yekem: {}".format(user.id, html.escape(user.first_name))
+           "\nNavê yekem: {}".format(user.id, html.escape(user.first_name))
 
     if user.last_name:
         text += "\nNavê duyem: {}".format(html.escape(user.last_name))
