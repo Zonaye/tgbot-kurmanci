@@ -84,7 +84,7 @@ def info(bot: Bot, update: Update, args: List[str]):
         text += "\nNavê duyem: {}".format(html.escape(user.last_name))
 
     if user.username:
-        text += "\nUsername: @{}".format(html.escape(user.username))
+        text += "\nNavê bikarhêner: @{}".format(html.escape(user.username))
 
     text += "\nLînk: {}".format(mention_html(user.id, "lînk"))
 
