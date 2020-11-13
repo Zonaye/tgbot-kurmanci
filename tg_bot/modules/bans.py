@@ -19,7 +19,6 @@ from tg_bot.modules.log_channel import loggable
 @bot_admin
 @can_restrict
 @user_admin
-@loggable
 def ban(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
@@ -41,123 +40,36 @@ def ban(bot: Bot, update: Update, args: List[str]) -> str:
             raise
 
     if is_user_ban_protected(chat, user_id, member):
-        message.reply_text("بەڕێوەبەرە... کەواتە؟\nکەواتە ناتوانم بانیبکەم.")
+        message.reply_text("Birêvebir nayê qedexe kirin.")
         return ""
 
     if user_id == bot.id:
-        message.reply_text("بە خەو نایبینی من خۆم بانبکەم، نەک بە ڕاستی.")
+        message.reply_text("Nikarim xwe qedexe bikim.")
         return ""
 
-    log = "<b>{}:</b>" \
-          "\n#BANNED" \
-          "\n<b>Admin:</b> {}" \
-          "\n<b>User:</b> {} (<code>{}</code>)".format(html.escape(chat.title),
-                                                       mention_html(user.id, user.first_name),
-                                                       mention_html(member.user.id, member.user.first_name),
-                                                       member.user.id)
+                                              
     if reason:
         log += "\n<b>Reason:</b> {}".format(reason)
 
     try:
         chat.kick_member(user_id)
-        bot.send_sticker(chat.id, BAN_STICKER)  # banhammer marie sticker
-        message.reply_text("بانکرا!")
+        #bot.send_sticker(chat.id, BAN_STICKER)  # banhammer marie sticker
+        message.reply_text("Hat qedexe kirin!")
         return log
 
     except BadRequest as excp:
         if excp.message == "Reply message not found":
             # Do not reply
-            message.reply_text('بانکرا!', quote=False)
+            message.reply_text('Hat qedexe kirin!', quote=False)
             return log
         else:
             LOGGER.warning(update)
             LOGGER.exception("ERROR banning user %s in chat %s (%s) due to %s", user_id, chat.title, chat.id,
                              excp.message)
-            message.reply_text("ئای، ناتوانم ئەو بەکارهێنەرە بانبکەم.")
+            message.reply_text("Min nekarî ew qedexe bikim.")
 
     return ""
 
-
-@run_async
-@bot_admin
-@can_restrict
-@user_admin
-@loggable
-def temp_ban(bot: Bot, update: Update, args: List[str]) -> str:
-    chat = update.effective_chat  # type: Optional[Chat]
-    user = update.effective_user  # type: Optional[User]
-    message = update.effective_message  # type: Optional[Message]
-
-    user_id, reason = extract_user_and_text(message, args)
-
-    if not user_id:
-        message.reply_text("بەکارهێنەرێکت دیارینەکردووە.")
-        return ""
-
-    try:
-        member = chat.get_member(user_id)
-    except BadRequest as excp:
-        if excp.message == "User not found":
-            message.reply_text("ئەم بەکارهێنەرە نادۆزمەوە")
-            return ""
-        else:
-            raise
-
-    if is_user_ban_protected(chat, user_id, member):
-        message.reply_text("بەڕێوەبەرە... کەواتە؟\nکەواتە ناتوانم بانیبکەم.")
-        return ""
-
-    if user_id == bot.id:
-        message.reply_text("بە خەو نایبینی من خۆم بانبکەم، نەک بە ڕاستی.")
-        return ""
-
-    if not reason:
-        message.reply_text("You haven't specified a time to ban this user for!")
-        return ""
-
-    split_reason = reason.split(None, 1)
-
-    time_val = split_reason[0].lower()
-    if len(split_reason) > 1:
-        reason = split_reason[1]
-    else:
-        reason = ""
-
-    bantime = extract_time(message, time_val)
-
-    if not bantime:
-        return ""
-
-    log = "<b>{}:</b>" \
-          "\n#TEMP BANNED" \
-          "\n<b>Admin:</b> {}" \
-          "\n<b>User:</b> {} (<code>{}</code>)" \
-          "\n<b>Time:</b> {}".format(html.escape(chat.title),
-                                     mention_html(user.id, user.first_name),
-                                     mention_html(member.user.id, member.user.first_name),
-                                     member.user.id,
-                                     time_val)
-    if reason:
-        log += "\n<b>Reason:</b> {}".format(reason)
-
-    try:
-        chat.kick_member(user_id, until_date=bantime)
-        bot.send_sticker(chat.id, BAN_STICKER)  # banhammer marie sticker
-        message.reply_text("بانکرا! بەکارهێنەر بە بانکراوی دەمێنێتەوە بۆ {}.".format(time_val))
-        return log
-
-    except BadRequest as excp:
-        if excp.message == "Reply message not found":
-            # Do not reply
-            message.reply_text("بانکرا! بەکارهێنەر بە بانکراوی دەمێنێتەوە بۆ {}.".format(time_val), quote=False)
-            return log
-        else:
-            LOGGER.warning(update)
-            LOGGER.exception("ERROR banning user %s in chat %s (%s) due to %s", user_id, chat.title, chat.id,
-                             excp.message)
-            message.reply_text("ئای، ناتوانم ئەو بەکارهێنەرە بانبکەم.")
-
-    return ""
 
 
 @run_async
@@ -185,7 +97,7 @@ def kick(bot: Bot, update: Update, args: List[str]) -> str:
             raise
 
     if is_user_ban_protected(chat, user_id):
-        message.reply_text("بەڕێوەبەرە... کەواتە؟\nکەواتە ناتوانم بانیبکەم.")
+        message.reply_text("Birêvebir nayê qedexe kirin.")
         return ""
 
     if user_id == bot.id:
@@ -194,23 +106,9 @@ def kick(bot: Bot, update: Update, args: List[str]) -> str:
 
     res = chat.unban_member(user_id)  # unban on current user = kick
     if res:
-        #bot.send_sticker(chat.id, BAN_STICKER)  # banhammer marie sticker
-        message.reply_text("دەرکرا!")
-        log = "<b>{}:</b>" \
-              "\n#KICKED" \
-              "\n<b>Admin:</b> {}" \
-              "\n<b>User:</b> {} (<code>{}</code>)".format(html.escape(chat.title),
-                                                           mention_html(user.id, user.first_name),
-                                                           mention_html(member.user.id, member.user.first_name),
-                                                           member.user.id)
-        if reason:
-            log += "\n<b>Reason:</b> {}".format(reason)
-
-        return log
-
+        message.reply_text("Hat der kirin!")
     else:
-        message.reply_text("ئای، ناتوانم ئەو بەکارهێنەرە دەربکەم.")
-
+        message.reply_text("Min nekarî ew der bikim.")
     return ""
 
 
@@ -220,21 +118,20 @@ def kick(bot: Bot, update: Update, args: List[str]) -> str:
 def kickme(bot: Bot, update: Update):
     user_id = update.effective_message.from_user.id
     if is_user_admin(update.effective_chat, user_id):
-        update.effective_message.reply_text("خۆت دەربچۆ، من ناتوانم دەرتبکەم... ئەی بەڕێوەبەر.")
+        update.effective_message.reply_text("Bi xwe derkeve birêvebir efendî.")
         return
 
-    res = update.effective_chat.unban_member(user_id)  # unban on current user = kick
+    res = update.effective_chat.unban_member(user_id)
     if res:
-        update.effective_message.reply_text("کێشە نییە.")
+        update.effective_message.reply_text("Keremke.")
     else:
-        update.effective_message.reply_text("ها? ناتوانم :/")
+        update.effective_message.reply_text("Nikarim.")
 
 
 @run_async
 @bot_admin
 @can_restrict
 @user_admin
-@loggable
 def unban(bot: Bot, update: Update, args: List[str]) -> str:
     message = update.effective_message  # type: Optional[Message]
     user = update.effective_user  # type: Optional[User]
@@ -255,27 +152,20 @@ def unban(bot: Bot, update: Update, args: List[str]) -> str:
             raise
 
     if user_id == bot.id:
-        message.reply_text("How would I unban myself if I wasn't here...?")
+        message.reply_text("Bibore?")
         return ""
 
     if is_user_in_chat(chat, user_id):
-        message.reply_text("Why are you trying to unban someone that's already in the chat?")
+        message.reply_text("Ew nehatiye qedexe kirin.")
         return ""
 
     chat.unban_member(user_id)
-    message.reply_text("ئێستا دەتوانێت بيتەوە!")
+    message.reply_text("Temam! Niha dikare dîsa tevl bibe.")
 
-    log = "<b>{}:</b>" \
-          "\n#UNBANNED" \
-          "\n<b>Admin:</b> {}" \
-          "\n<b>User:</b> {} (<code>{}</code>)".format(html.escape(chat.title),
-                                                       mention_html(user.id, user.first_name),
-                                                       mention_html(member.user.id, member.user.first_name),
+    
                                                        member.user.id)
-    if reason:
-        log += "\n<b>Reason:</b> {}".format(reason)
-
-    return log
+    
+    return ""
 
 
 __help__ = """
