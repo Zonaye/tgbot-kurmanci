@@ -157,10 +157,10 @@ def unban(bot: Bot, update: Update, args: List[str]) -> str:
         return ""
 
     chat.unban_member(user_id)
-    message.reply_text("Temam! Niha dikare dîsa tevl bibe.")
+    message.reply_text("Temam! Dikare dîsa tevl bibe.")
 
     
-                                                       member.user.id)
+                                                      
     
     return ""
 
