@@ -14,23 +14,22 @@ from tg_bot import dispatcher, SUDO_USERS, LOGGER
 from tg_bot.modules.disable import DisableAbleCommandHandler
 from tg_bot.modules.helper_funcs.chat_status import can_delete, is_user_admin, user_not_admin, user_admin, \
     bot_can_delete, is_bot_admin
-from tg_bot.modules.log_channel import loggable
 from tg_bot.modules.sql import users_sql
 
-LOCK_TYPES = {'sticker': Filters.sticker,
+LOCK_TYPES = {'ledayek': Filters.sticker,
               'audio': Filters.audio,
-              'voice': Filters.voice,
-              'document': Filters.document & ~Filters.animation,
+              'deng': Filters.voice,
+              'fayl': Filters.document & ~Filters.animation,
               'video': Filters.video,
               'videonote': Filters.video_note,
-              'contact': Filters.contact,
-              'photo': Filters.photo,
+              'tekili': Filters.contact,
+              'foto': Filters.photo,
               'gif': Filters.animation,
-              'url': Filters.entity(MessageEntity.URL) | Filters.caption_entity(MessageEntity.URL),
-              'bots': Filters.status_update.new_chat_members,
-              'forward': Filters.forwarded,
-              'game': Filters.game,
-              'location': Filters.location,
+              'link': Filters.entity(MessageEntity.URL) | Filters.caption_entity(MessageEntity.URL),
+              'bot': Filters.status_update.new_chat_members,
+              'veguhestin': Filters.forwarded,
+              'listik': Filters.game,
+              'cih': Filters.location,
               }
 
 GIF = Filters.animation
@@ -39,11 +38,11 @@ MEDIA = Filters.audio | Filters.document | Filters.video | Filters.video_note | 
 MESSAGES = Filters.text | Filters.contact | Filters.location | Filters.venue | Filters.command | MEDIA | OTHER
 PREVIEWS = Filters.entity("url")
 
-RESTRICTION_TYPES = {'messages': MESSAGES,
-                     'media': MEDIA,
-                     'other': OTHER,
+RESTRICTION_TYPES = {'peyamsandin': MESSAGES,
+                     'medya': MEDIA,
+                     'adin': OTHER,
                      # 'previews': PREVIEWS, # NOTE: this has been removed cos its useless atm.
-                     'all': Filters.all}
+                     'hemi': Filters.all}
 
 PERM_GROUP = 1
 REST_GROUP = 2
@@ -97,7 +96,6 @@ def locktypes(bot: Bot, update: Update):
 
 @user_admin
 @bot_can_delete
-@loggable
 def lock(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
@@ -106,12 +104,9 @@ def lock(bot: Bot, update: Update, args: List[str]) -> str:
         if len(args) >= 1:
             if args[0] in LOCK_TYPES:
                 sql.update_lock(chat.id, args[0], locked=True)
-                message.reply_text("Locked {} messages for all non-admins!".format(args[0]))
+                message.reply_text("Peyamên {} hat qifl kirin!".format(args[0]))
 
-                return "<b>{}:</b>" \
-                       "\n#LOCK" \
-                       "\n<b>Admin:</b> {}" \
-                       "\nLocked <code>{}</code>.".format(html.escape(chat.title),
+                return ""
                                                           mention_html(user.id, user.first_name), args[0])
 
             elif args[0] in RESTRICTION_TYPES:
@@ -120,11 +115,8 @@ def lock(bot: Bot, update: Update, args: List[str]) -> str:
                     members = users_sql.get_chat_members(str(chat.id))
                     restr_members(bot, chat.id, members, messages=True, media=True, other=True)
 
-                message.reply_text("Locked {} for all non-admins!".format(args[0]))
-                return "<b>{}:</b>" \
-                       "\n#LOCK" \
-                       "\n<b>Admin:</b> {}" \
-                       "\nLocked <code>{}</code>.".format(html.escape(chat.title),
+                message.reply_text("Li vir {} hat qifl kirin!".format(args[0]))
+                return ""
                                                           mention_html(user.id, user.first_name), args[0])
 
             else:
@@ -138,7 +130,6 @@ def lock(bot: Bot, update: Update, args: List[str]) -> str:
 
 @run_async
 @user_admin
-@loggable
 def unlock(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
@@ -148,10 +139,7 @@ def unlock(bot: Bot, update: Update, args: List[str]) -> str:
             if args[0] in LOCK_TYPES:
                 sql.update_lock(chat.id, args[0], locked=False)
                 message.reply_text("Unlocked {} for everyone!".format(args[0]))
-                return "<b>{}:</b>" \
-                       "\n#UNLOCK" \
-                       "\n<b>Admin:</b> {}" \
-                       "\nUnlocked <code>{}</code>.".format(html.escape(chat.title),
+                return ""
                                                             mention_html(user.id, user.first_name), args[0])
 
             elif args[0] in RESTRICTION_TYPES:
@@ -173,18 +161,15 @@ def unlock(bot: Bot, update: Update, args: List[str]) -> str:
                 elif args[0] == "all":
                     unrestr_members(bot, chat.id, members, True, True, True, True)
                 """
-                message.reply_text("Unlocked {} for everyone!".format(args[0]))
+                message.reply_text("Ji bo herkes {} hat vekirin!".format(args[0]))
 
-                return "<b>{}:</b>" \
-                       "\n#UNLOCK" \
-                       "\n<b>Admin:</b> {}" \
-                       "\nUnlocked <code>{}</code>.".format(html.escape(chat.title),
+                return ""
                                                             mention_html(user.id, user.first_name), args[0])
             else:
-                message.reply_text("What are you trying to unlock...? Try /locktypes for the list of lockables")
-
+                message.reply_text("Dixwazî çi vekî? /corenqifl")
+                
         else:
-            bot.sendMessage(chat.id, "What are you trying to unlock...?")
+            bot.sendMessage(chat.id, "Dixwazî çi vekî?")
 
     return ""
 
@@ -245,28 +230,28 @@ def build_lock_message(chat_id):
     else:
         res = "These are the locks in this chat:"
         if locks:
-            res += "\n - sticker = `{}`" \
+            res += "\n - ledayek = `{}`" \
                    "\n - audio = `{}`" \
-                   "\n - voice = `{}`" \
-                   "\n - document = `{}`" \
+                   "\n - deng = `{}`" \
+                   "\n - fayl = `{}`" \
                    "\n - video = `{}`" \
                    "\n - videonote = `{}`" \
-                   "\n - contact = `{}`" \
-                   "\n - photo = `{}`" \
+                   "\n - tekili = `{}`" \
+                   "\n - foto = `{}`" \
                    "\n - gif = `{}`" \
-                   "\n - url = `{}`" \
-                   "\n - bots = `{}`" \
-                   "\n - forward = `{}`" \
-                   "\n - game = `{}`" \
-                   "\n - location = `{}`".format(locks.sticker, locks.audio, locks.voice, locks.document,
+                   "\n - link = `{}`" \
+                   "\n - bot = `{}`" \
+                   "\n - veguhestin = `{}`" \
+                   "\n - listik = `{}`" \
+                   "\n - cih = `{}`".format(locks.sticker, locks.audio, locks.voice, locks.document,
                                                  locks.video, locks.videonote, locks.contact, locks.photo, locks.gif, locks.url,
                                                  locks.bots, locks.forward, locks.game, locks.location)
         if restr:
-            res += "\n - messages = `{}`" \
-                   "\n - media = `{}`" \
-                   "\n - other = `{}`" \
+            res += "\n - peyamsandin = `{}`" \
+                   "\n - medya = `{}`" \
+                   "\n - adin = `{}`" \
                    "\n - previews = `{}`" \
-                   "\n - all = `{}`".format(restr.messages, restr.media, restr.other, restr.preview,
+                   "\n - hemi = `{}`".format(restr.messages, restr.media, restr.other, restr.preview,
                                             all([restr.messages, restr.media, restr.other, restr.preview]))
     return res
 
@@ -290,26 +275,15 @@ def __chat_settings__(chat_id, user_id):
 
 
 __help__ = """
- - /locktypes: a list of possible locktypes
-
-*Admin only:*
- - /lock <type>: lock items of a certain type (not available in private)
- - /unlock <type>: unlock items of a certain type (not available in private)
- - /locks: the current list of locks in this chat.
-
-Locks can be used to restrict a group's users.
-eg:
-Locking urls will auto-delete all messages with urls, locking stickers will delete all \
-stickers, etc.
-Locking bots will stop non-admins from adding bots to the chat.
+_
 """
 
 __mod_name__ = "Locks"
 
-LOCKTYPES_HANDLER = DisableAbleCommandHandler("locktypes", locktypes)
-LOCK_HANDLER = CommandHandler("lock", lock, pass_args=True, filters=Filters.group)
-UNLOCK_HANDLER = CommandHandler("unlock", unlock, pass_args=True, filters=Filters.group)
-LOCKED_HANDLER = CommandHandler("locks", list_locks, filters=Filters.group)
+LOCKTYPES_HANDLER = DisableAbleCommandHandler(["locktypes", "corenqifl"], locktypes)
+LOCK_HANDLER = CommandHandler(["lock", "qifl"], lock, pass_args=True, filters=Filters.group)
+UNLOCK_HANDLER = CommandHandler(["unlock", "veke"], unlock, pass_args=True, filters=Filters.group)
+LOCKED_HANDLER = CommandHandler(["locks", "qiflan"], list_locks, filters=Filters.group)
 
 dispatcher.add_handler(LOCK_HANDLER)
 dispatcher.add_handler(UNLOCK_HANDLER)
