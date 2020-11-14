@@ -140,7 +140,7 @@ def unlock(bot: Bot, update: Update, args: List[str]) -> str:
                 sql.update_lock(chat.id, args[0], locked=False)
                 message.reply_text("Unlocked {} for everyone!".format(args[0]))
                 return ""
-                                                            mention_html(user.id, user.first_name), args[0])
+                                                            
 
             elif args[0] in RESTRICTION_TYPES:
                 sql.update_restriction(chat.id, args[0], locked=False)
@@ -164,7 +164,7 @@ def unlock(bot: Bot, update: Update, args: List[str]) -> str:
                 message.reply_text("Ji bo herkes {} hat vekirin!".format(args[0]))
 
                 return ""
-                                                            mention_html(user.id, user.first_name), args[0])
+                                                             
             else:
                 message.reply_text("Dixwazî çi vekî? /corenqifl")
                 
