@@ -11,13 +11,11 @@ from tg_bot import dispatcher, LOGGER
 from tg_bot.modules.helper_funcs.chat_status import bot_admin, user_admin, is_user_admin, can_restrict
 from tg_bot.modules.helper_funcs.extraction import extract_user, extract_user_and_text
 from tg_bot.modules.helper_funcs.string_handling import extract_time
-from tg_bot.modules.log_channel import loggable
 
 
 @run_async
 @bot_admin
 @user_admin
-@loggable
 def mute(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
@@ -29,7 +27,7 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
         return ""
 
     if user_id == bot.id:
-        message.reply_text("خۆم بێدەنگ ناکەم!")
+        message.reply_text("Ez xwe bêdeng nakim!")
         return ""
 
     member = chat.get_member(int(user_id))
@@ -40,14 +38,8 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
 
         elif member.can_send_messages is None or member.can_send_messages:
             bot.restrict_chat_member(chat.id, user_id, can_send_messages=False)
-            message.reply_text("بێدەنگکرا!")
-            return "<b>{}:</b>" \
-                   "\n#MUTE" \
-                   "\n<b>Admin:</b> {}" \
-                   "\n<b>User:</b> {}".format(html.escape(chat.title),
-                                              mention_html(user.id, user.first_name),
-                                              mention_html(member.user.id, member.user.first_name))
-
+            message.reply_text("Hat bêdeng kirin!")
+            return ""
         else:
             message.reply_text("خۆی هەر ناتوانێت قسەبکات!")
     else:
@@ -59,7 +51,6 @@ def mute(bot: Bot, update: Update, args: List[str]) -> str:
 @run_async
 @bot_admin
 @user_admin
-@loggable
 def unmute(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
@@ -88,13 +79,8 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
                                          can_send_media_messages=True,
                                          can_send_other_messages=True,
                                          can_add_web_page_previews=True)
-                message.reply_text("مافی قسەکردنی پێبەخشرایەوە!")
-                return "<b>{}:</b>" \
-                       "\n#UNMUTE" \
-                       "\n<b>Admin:</b> {}" \
-                       "\n<b>User:</b> {}".format(html.escape(chat.title),
-                                                  mention_html(user.id, user.first_name),
-                                                  mention_html(member.user.id, member.user.first_name))
+                message.reply_text("Dikare dîsa biaxve!")
+                return ""
     else:
         message.reply_text("ئەم بەکارهينەرە لەم چاتە نییە، بەخشینی مافی قسەکردن پێیان وایان لێناکات لە ئێستا "
                            "زیاتر قسەبکەن!")
@@ -106,7 +92,6 @@ def unmute(bot: Bot, update: Update, args: List[str]) -> str:
 @bot_admin
 @can_restrict
 @user_admin
-@loggable
 def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
     chat = update.effective_chat  # type: Optional[Chat]
     user = update.effective_user  # type: Optional[User]
@@ -151,28 +136,19 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
 
     if not mutetime:
         return ""
-
-    log = "<b>{}:</b>" \
-          "\n#TEMP MUTED" \
-          "\n<b>Admin:</b> {}" \
-          "\n<b>User:</b> {}" \
-          "\n<b>Time:</b> {}".format(html.escape(chat.title), mention_html(user.id, user.first_name),
-                                     mention_html(member.user.id, member.user.first_name), time_val)
-    if reason:
-        log += "\n<b>Reason:</b> {}".format(reason)
-
+    
     try:
         if member.can_send_messages is None or member.can_send_messages:
             bot.restrict_chat_member(chat.id, user_id, until_date=mutetime, can_send_messages=False)
-            message.reply_text("بێدەنگکرا بۆ {}!".format(time_val))
-            return log
+            message.reply_text("Hat bêdeng kirin ji bo {}!".format(time_val))
+            return ""
         else:
             message.reply_text("ئەمە هەر خۆی ناتوانێت قسەبکات.")
 
     except BadRequest as excp:
         if excp.message == "Reply message not found":
             # Do not reply
-            message.reply_text("بێدەنگکرا بۆ {}!".format(time_val), quote=False)
+            message.reply_text("Hat bêdeng kirin ji bo {}!".format(time_val), quote=False)
             return log
         else:
             LOGGER.warning(update)
@@ -184,17 +160,14 @@ def temp_mute(bot: Bot, update: Update, args: List[str]) -> str:
 
 
 __help__ = """
-*تەنها بەڕێوەبەر:**Admin only:*
-  - /mute <userhandle>: silences a user. Can also be used as a reply, muting the replied to user.
-  - /tmute <userhandle> x(m/h/d): mutes a user for x time. (via handle, or reply). m = minutes, h = hours, d = days.
-  - /unmute <userhandle>: unmutes a user. Can also be used as a reply, muting the replied to user.
+_
 """
 
 __mod_name__ = "Muting"
 
-MUTE_HANDLER = CommandHandler("mute", mute, pass_args=True, filters=Filters.group)
-UNMUTE_HANDLER = CommandHandler("unmute", unmute, pass_args=True, filters=Filters.group)
-TEMPMUTE_HANDLER = CommandHandler(["tmute", "tempmute"], temp_mute, pass_args=True, filters=Filters.group)
+MUTE_HANDLER = CommandHandler(["mute", "bedeng"], mute, pass_args=True, filters=Filters.group)
+UNMUTE_HANDLER = CommandHandler(["unmute", "jbedeng"], unmute, pass_args=True, filters=Filters.group)
+TEMPMUTE_HANDLER = CommandHandler(["tmute", "dbedeng"], temp_mute, pass_args=True, filters=Filters.group)
 
 dispatcher.add_handler(MUTE_HANDLER)
 dispatcher.add_handler(UNMUTE_HANDLER)
