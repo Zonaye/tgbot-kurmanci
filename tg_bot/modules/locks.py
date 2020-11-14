@@ -107,7 +107,7 @@ def lock(bot: Bot, update: Update, args: List[str]) -> str:
                 message.reply_text("Peyamên {} hat qifl kirin!".format(args[0]))
 
                 return ""
-                                                          mention_html(user.id, user.first_name), args[0])
+                                                          
 
             elif args[0] in RESTRICTION_TYPES:
                 sql.update_restriction(chat.id, args[0], locked=True)
