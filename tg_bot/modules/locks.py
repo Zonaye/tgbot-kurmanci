@@ -228,7 +228,7 @@ def build_lock_message(chat_id):
     if not (locks or restr):
         res = "There are no current locks in this chat."
     else:
-        res = "These are the locks in this chat:"
+        res = ""
         if locks:
             res += "\n - ledayek = `{}`" \
                    "\n - audio = `{}`" \
@@ -243,7 +243,7 @@ def build_lock_message(chat_id):
                    "\n - bot = `{}`" \
                    "\n - veguhestin = `{}`" \
                    "\n - listik = `{}`" \
-                   "\n - cih = `{}`".format(locks.sticker, locks.audio, locks.voice, locks.document,
+                   "\n - cih = `{}`".replace("False", "Şaş").replace("True", "Rast").format(locks.sticker, locks.audio, locks.voice, locks.document,
                                                  locks.video, locks.videonote, locks.contact, locks.photo, locks.gif, locks.url,
                                                  locks.bots, locks.forward, locks.game, locks.location)
         if restr:
@@ -251,7 +251,7 @@ def build_lock_message(chat_id):
                    "\n - medya = `{}`" \
                    "\n - adin = `{}`" \
                    "\n - previews = `{}`" \
-                   "\n - hemi = `{}`".format(restr.messages, restr.media, restr.other, restr.preview,
+                   "\n - hemi = `{}`".replace("False", "Şaş").replace("True", "Rast").format(restr.messages, restr.media, restr.other, restr.preview,
                                             all([restr.messages, restr.media, restr.other, restr.preview]))
     return res
 
