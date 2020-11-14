@@ -117,7 +117,7 @@ def lock(bot: Bot, update: Update, args: List[str]) -> str:
 
                 message.reply_text("Li vir {} hat qifl kirin!".format(args[0]))
                 return ""
-                                                          mention_html(user.id, user.first_name), args[0])
+                                                           
 
             else:
                 message.reply_text("What are you trying to lock...? Try /locktypes for the list of lockables")
